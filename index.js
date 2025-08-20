@@ -15,13 +15,10 @@ app.use(session({
   saveUninitialized: false,
 }));
 
-// SQLite database connection
 const db = new sqlite3.Database('./myapp.db');
 
-// Serve static files except index.html by default
 app.use(express.static(path.join(__dirname), { index: false }));
 
-// Middleware to check authentication
 function isAuthenticated(req, res, next) {
   if (req.session.authenticated) {
     next();
