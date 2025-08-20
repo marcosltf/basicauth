@@ -1,14 +1,10 @@
 # Basic Auth Application for fucksociety.dev
 
-This is a simple Node.js application that implements basic authentication.
+This is a simple Node.js application that implements basic authentication, which I plan to use on fucksociety.dev
 
 ## Requirements
 
-Ensure the following Node.js built-in modules are available (these are typically included by default):
+to install necessary packages, run this:
 
-- `http`
-- `fs`
-- `path`
-- `cookie`
-
-No installation is required for some modules since they are part of Node.js core.  
+```bash
+npm install express express-session body-parser sqlite3
