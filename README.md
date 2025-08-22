@@ -1,6 +1,6 @@
 # Basic auth application for fucksociety.dev
 
-This is a simple node.js application that implements basic authentication, which I plan to use on fucksociety.dev
+This is a simple node.js application that implements basic authentication, which I use on a few uni assignments.
 
 ## Requirements
 
