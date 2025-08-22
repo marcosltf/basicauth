@@ -11,7 +11,7 @@ const PORT = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
-  secret: '98c9cc024f2fce57f7e5c9257f690ef410555e11d783647ad754c59cf7ccced0',
+  secret: '98c9cc024f2fce57f7e5c9257f690ef410555e11d783647ad754c59cf7ccced0', // this is for testing purposes only
   resave: false,
   saveUninitialized: false,
 }));
@@ -84,3 +84,4 @@ app.get('/logout', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
