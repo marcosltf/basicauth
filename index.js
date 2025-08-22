@@ -7,6 +7,7 @@ const sqlite3 = require('sqlite3').verbose();
 const app = express();
 const PORT = 3000;
 
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(session({
@@ -17,8 +18,10 @@ app.use(session({
 
 const db = new sqlite3.Database('./myapp.db');
 
-app.use(express.static(path.join(__dirname), { index: false }));
+// Serve only static assets (CSS, JS, images)
+app.use('/static', express.static(path.join(__dirname, 'static')));
 
+// Authentication middleware
 function isAuthenticated(req, res, next) {
   if (req.session.authenticated) {
     next();
@@ -27,12 +30,20 @@ function isAuthenticated(req, res, next) {
   }
 }
 
+// Routes
 app.get('/', (req, res) => {
   if (req.session.authenticated) {
     res.redirect('/index.html');
   } else {
     res.redirect('/login.html');
   }
+});
+
+app.get('/login.html', (req, res) => {
+  if (req.session.authenticated) {
+    return res.redirect('/index.html');
+  }
+  res.sendFile(path.join(__dirname, 'login.html'));
 });
 
 app.get('/index.html', isAuthenticated, (req, res) => {
@@ -43,20 +54,24 @@ app.get('/index.html', isAuthenticated, (req, res) => {
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
-  db.get(`SELECT * FROM users WHERE username = ? AND password = ?`, [username, password], (err, row) => {
-    if (err) {
-      console.error(err);
-      res.send('Internal server error');
-      return;
-    }
+  db.get(
+    `SELECT * FROM users WHERE username = ? AND password = ?`,
+    [username, password],
+    (err, row) => {
+      if (err) {
+        console.error(err);
+        res.send('Internal server error');
+        return;
+      }
 
-    if (row) {
-      req.session.authenticated = true;
-      res.redirect('/index.html');
-    } else {
-      res.send('Invalid credentials. <a href="/login.html">Try again</a>');
+      if (row) {
+        req.session.authenticated = true;
+        res.redirect('/index.html');
+      } else {
+        res.send('Invalid credentials. <a href="/login.html">Try again</a>');
+      }
     }
-  });
+  );
 });
 
 // Logout route
