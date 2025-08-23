@@ -8,4 +8,4 @@ It is used for a few university assignments and on [fucksociety.dev](http://fuck
 Install the necessary dependencies:
 
 ```bash
-npm install express express-session body-parser sqlite3 bcrypt ejs
+npm install express express-session body-parser sqlite3 bcrypt ejs connect-sqlite3
